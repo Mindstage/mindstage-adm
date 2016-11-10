@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+if [ "$1" == 0 ]; then
+echo "192.168.1.2" > /var/mindstage/master-ip
+elif [ "$1" -ge 0 -a "$1" -le 18 ]; then
+LASTOCT=$(($1 + 50))
+echo "192.168.1.$LASTOCT" > /var/mindstage/master-ip
+fi
+fi
