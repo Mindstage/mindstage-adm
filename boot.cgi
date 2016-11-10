@@ -43,11 +43,9 @@ def verifyToken( verifydata, verifykey ):
 					decryptionArray[int(verifykey[36:38],16)] = "8"
 					decryptionArray[int(verifykey[38:40],16)] = "9"
 					tempToken = ""
-					kintarr = ""
 					for x in range(0, 10):
 						ica = x*2
 						keyInt = int( iauth[ica:ica+2] , 16) - int( verifykey[ica:ica+2] , 16)
-						kintarr = kintarr + str( keyInt ) + "::"
 						if keyInt in decryptionArray:
 							tempToken = tempToken + str( decryptionArray[keyInt] )
 					if len(tempToken) == 10:
