@@ -25,10 +25,11 @@ print ""
 #Logout requested, logging out.
 #NOTE: WORKS ONLY IF YOU ARE MASTER FOR OBVIOUS SECURITY REASONS
 if "QUERY_STRING" in os.environ:
-        if master_ip == client_ip:
-                master_ip = "None"
-                sh.sudo.updatemaster("0")
-                print "LogoutSuccessful"
+        if os.environ["QUERY_STRING"] == "1":
+                if master_ip == client_ip:
+                        master_ip = "None"
+                        sh.sudo.updatemaster("0")
+                        print "LogoutSuccessful"
 
 #Return status of requesting PC. This to delete the
 #"Logout Personell" icon from desktop in customer mode at boot.
