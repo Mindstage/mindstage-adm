@@ -108,6 +108,11 @@ if master_ip == "192.168.1.2":
 client_ip = os.environ["REMOTE_ADDR"]
 iqn = MASTER_IQN
 
+#If any other PC is in master, disallow booting
+if not master_ip == "None":
+        if not master_ip == client_ip:
+                menuToken = "failboot"
+
 #iPXE either want to auth using authdata, or if authdata is empty, want to get authentication information
 if menuToken == "auth":
 	#Generate fake key incase file does not load. Load keyfile.
@@ -148,8 +153,18 @@ if client_ip == master_ip:
 if MODE not in ("master-usb", "master"):
 	iqn = sh.sudo.mindcontrol("iscsi_create", client_ip)
 
+#If any PC is in master, disallow any other PC from booting.
+if menuToken == "failboot":
+        form_print("Content-Type: text/plain")
+        form_print()
+        form_print("""#!ipxe
+echo The computers are currently updating from master with IP {mpc}.
+echo Note that the computer number is last octet minus 50.
+echo They are currently closed for customers.
+prompt Press any key to reboot.
+reboot""")
 #Booting into iscsi image
-if menuToken == "boot":
+elif menuToken == "boot":
 	form_print("Content-Type: text/plain")
 	form_print()
 	form_print("""#!ipxe
