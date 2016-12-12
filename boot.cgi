@@ -151,7 +151,8 @@ if client_ip == master_ip:
 
 
 if MODE not in ("master-usb", "master"):
-	iqn = sh.sudo.mindcontrol("iscsi_create", client_ip)
+	if menuToken == "boot":
+		iqn = sh.sudo.mindcontrol("iscsi_create", client_ip)
 
 #If any PC is in master, disallow any other PC from booting.
 if menuToken == "failboot":
